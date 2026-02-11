@@ -17,11 +17,22 @@
 *
 ********************************************************************************************/
 
-#include "raymob.h" // This header can replace 'raylib.h' and includes additional functions related to Android.
+#include "raylib.h" // This header can replace 'raylib.h' and includes additional functions related to Android.
+#include "raymob.h"
 
+#define RAYGUI_IMPLEMENTATION
+#include "raygui.h"
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
+Color c = RAYWHITE;
+
+float map(float x, float inMin, float inMax, float outMin, float outMax) {
+    if (x < inMin) x = inMin;
+    if (x > inMax) x = inMax;
+    return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+}
+
 int main(void)
 {
     // Initialization
@@ -42,8 +53,13 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-        ClearBackground(RAYWHITE);
+        ClearBackground(c);
 
+        DrawCircleV(GetMousePosition(), 50.f, RED);
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+        {
+            VibrateEx(0.1, 1);
+        }
         DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
 
         EndDrawing();
